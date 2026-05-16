@@ -82,4 +82,28 @@ class UserController extends Controller
         ]);
 }
 
+//   الأدمن هو من يملك صلاحية الحذف , لإن المستخدم العادي لا يملك صلاحية حذف حسابه أو حساب أي مستخدم آخر
+  public function destroy(Request $request, $id)
+  {
+      $user = $request->user();
+      if($user->role !== 'admin')
+          { 
+              return response()->json([
+                  'success' => false,
+                  'message' => 'غير مصرح لك بعملية الحذف , هذه العملية للأدمن فقط'
+              ], 403);
+          }
+      $userToDelete = User::find($id);
+      if (!$userToDelete) {
+          return response()->json([
+              'success' => false,
+              'message' => 'المستخدم غير موجود أو أنك قمت بحذفه مسبقا'
+          ], 404);
+      }
+      $userToDelete->delete();
+      return response()->json([
+          'success' => true,
+          'message' => 'تم حذف المستخدم بنجاح'
+      ]);
+  }
 }
