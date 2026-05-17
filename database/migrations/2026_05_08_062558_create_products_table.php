@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
             $table->foreignId('category_id')->constrained('categories')->onDelete('restrict'); // اي ممنوع حذف الفئة إذا كانت مرتبطة بمنتجات
-            $table->string('image_path')->nullable();
+            // $table->string('image_path')->nullable();
             $table->enum('type', ['car','part'])->default('part');
             $table->integer('quantity'); // كمية المنتج في المخزون , اي عدد القطع من هذا المنتج
             $table->timestamps();

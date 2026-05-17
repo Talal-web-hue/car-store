@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,3 +32,6 @@ Route::delete('categories/destroy/{categoryId}' , [CategoryController::class , '
 Route::get('getCategory/{id}' , [CategoryController::class , 'getDetailsCategory']); // للعملاء و التصفح
 Route::get('getCategoriesWithProducts/{id}' , [CategoryController::class , 'getCategoryWithProducts']); // للعملاء و التصفح
 Route::get('searchCategory' , [CategoryController::class , 'searchCategories']);
+
+// product Api
+Route::post('store' , [ProductController::class , 'store'])->middleware('auth:sanctum'); // هذه خاصة للآدمن فقط هو الذي يقوم بإنشاء المنتجات    
