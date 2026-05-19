@@ -35,3 +35,9 @@ Route::get('searchCategory' , [CategoryController::class , 'searchCategories']);
 
 // product Api
 Route::post('store' , [ProductController::class , 'store'])->middleware('auth:sanctum'); // هذه خاصة للآدمن فقط هو الذي يقوم بإنشاء المنتجات    
+Route::put('update/{productId}' , [ProductController::class , 'update'])->middleware('auth:sanctum'); // هذه خاصة للآدمن فقط هو الذي يقوم بتحديث المنتجات    
+Route::delete('destroy/{productId}' , [ProductController::class , 'destroy'])->middleware('auth:sanctum'); // هذه خاصة للآدمن فقط هو الذي يقوم بتحديث المنتجات    
+Route::get('index' , [ProductController::class , 'index']); // للعملاء و التصفح
+Route::get('search' , [ProductController::class , 'search']); // للعملاء و التصفح
+Route::get('show/{id}' , [ProductController::class , 'show']); // للعملاء و التصفح
+Route::get('getProductDetails/{id}' , [ProductController::class , 'getProductsByCategory']); // للعملاء و التصفح
