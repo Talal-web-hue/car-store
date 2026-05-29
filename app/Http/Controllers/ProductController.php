@@ -309,4 +309,44 @@ public function getProductsByCategory($categoryId)
         'data' => $products
     ] , 200);
 }
+
+//  تابع التحقق من توفر كمية المنتج 
+//  يمكن للعملاء استخدام هذا التابع لمعرفة ما إذا كان المنتج متوفر في المخزون أم لا و إذا كانت الكمية منخفضة أم لا
+    public function getStockStatus($productId)
+    {
+      $product = Product::find($productId);
+      if(!$product)
+        {
+         return response()->json([
+            'success' => false,
+            'message' => 'المنتج غير موجود او أنه محذوف مسبقا']);
+        }
+        $quantity = $product->quantity;
+        $isAvailable = ($quantity>0);
+        $isLowStock = ($quantity>0 && $quantity<=5);
+        if($quantity === 0)
+            {
+             $notice = 'هذا المنتج نفذ من المخزون';
+            }
+            
+        elseif($isLowStock)
+            {
+        $notice = 'الكمية محدودة، تبقى فقط ' . $quantity . ' قطعة';
+            }
+
+        return response()->json(
+            [
+                'success'=>true ,
+                'message'=>'تم التحقق من توفر المنتج بنجاح' ,
+                'data'=>[
+                    'product_id'=>$product->id,
+                    'product_name'=>$product->name,
+                    'quantity'=>$product->quantity,
+                    'is_available'=>$isAvailable,
+                    'is_low_stock'=>$isLowStock,
+                    'notice'=>$notice ?? null
+                    
+                    ]
+            ]);
+    }
 }
