@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -60,3 +61,16 @@ Route::get('getImagesProduct/{productId}' , [ImageController::class , 'getImages
 Route::post('favorites' , [FavoriteController::class , 'addToFavorite'])->middleware('auth:sanctum');
 Route::get('getFavorites' , [FavoriteController::class , 'getFavorites'])->middleware('auth:sanctum');
 Route::delete('favorites/{id}' , [FavoriteController::class , 'removeFromFavorite'])->middleware('auth:sanctum');
+Route::delete('clearFavorites' ,[FavoriteController::class , 'clearFavorites'])->middleware('auth:sanctum'); // تابع لحذف كل المنتجات من المفضلة مرة واحدة
+
+
+// Review Api
+Route::post('storeReview' , [ReviewController::class , 'store'])->middleware('auth:sanctum');
+Route::get('index/{productId}' , [ReviewController::class , 'index']); // عام أي يحق لجميع الزوار مشاهدة تقييمات منتج ما
+Route::put('updateReview/{reviewId}' , [ReviewController::class , 'update'])->middleware('auth:sanctum'); // هذه خاصة للمستخدم المسجل الدخول 
+Route::delete('destroyReview/{reviewId}' , [ReviewController::class , 'destroy'])->middleware('auth:sanctum'); // هذه خاصة للمستخدم المسجل الدخول, و الأدمن أيضاً يستطيع حذف أي تقييم لأنه يملك صلاحيات أعلى من المستخدم العادي
+Route::get('checkProduct/{productId}' , [ReviewController::class , 'check'])->middleware('auth:sanctum');
+Route::get('myReviews' , [ReviewController::class , 'myReviews'])->middleware('auth:sanctum');
+
+
+// 

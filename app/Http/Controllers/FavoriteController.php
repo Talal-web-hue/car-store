@@ -64,5 +64,14 @@ class FavoriteController extends Controller
 
     }
 }
+
+
+//    تابع تفريغ المفضلة بالكامل
+   public function clearFavorites(Request $request)
+   {
+    $user = $request->user();
+    $user->favorites()->delete();
+    return response()->json(['message'=>'Favorites cleared successfully.'], 200);
+   }
 }
 

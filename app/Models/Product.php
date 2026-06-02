@@ -39,4 +39,10 @@ class Product extends Model
         return $this->hasMany(Favorite::class , 'product_id');
     }
 
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class , 'product_id');
+    }
+
 }
