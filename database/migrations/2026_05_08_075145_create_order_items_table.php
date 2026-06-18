@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->decimal('unit_price' , 10 ,2); // سعر القطعة الواحدة وقت الشراء
-            $table->integer('qunatity'); // عدد القطع من هذا المنتج 
+            $table->integer('quantity'); // عدد القطع من هذا المنتج 
             $table->timestamps();
         });
     }

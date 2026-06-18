@@ -4,8 +4,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -73,4 +76,26 @@ Route::get('checkProduct/{productId}' , [ReviewController::class , 'check'])->mi
 Route::get('myReviews' , [ReviewController::class , 'myReviews'])->middleware('auth:sanctum');
 
 
-// 
+// Order Api 
+Route::post('storeOrder' , [OrderController::class , 'store'])->middleware('auth:sanctum'); // هذه خاصة للمستخدم المسجل الدخول هو الذي يقوم بإنشاء الطلبات
+Route::get('showOrders' , [OrderController::class , 'showOrders'])->middleware('auth:sanctum'); // هذه خاصة للمستخدم المسجل الدخول هو الذي يقوم بعرض طلباته
+Route::get('getOrderDetails/{order}' , [OrderController::class , 'showDetails'])->middleware('auth:sanctum'); // هذه خاصة للمستخدم المسجل الدخول هو الذي يقوم بعرض تفاصيل طلب واحد
+Route::put('updateOrder/{orderId}' , [OrderController::class , 'update'])->middleware('auth:sanctum'); // هذه خاصة للآدمن فقط هو الذي يقوم بتحديث حالة الطلب
+Route::delete('deleteOrder/{orderId}' , [OrderController::class , 'delete'])->middleware('auth:sanctum'); // هذه خاصة للمستخدم المسجل
+Route::put('cancelOrder/{order}' , [OrderController::class , 'cancel'])->middleware('auth:sanctum'); // هذه خاصة للمستخدم المسجل
+
+
+//  Payment Api
+Route::post('store' , [PaymentController::class , 'store'])->middleware('auth:sanctum');  // هي صلاحية لمالك الطلب فقط
+Route::get('show/payment/{paymentId}' , [PaymentController::class , 'show'])->middleware('auth:sanctum');  // هي صلاحية لمالك الطلب فقط
+Route::get('getPaymentStatus/{orderId}' , [PaymentController::class , 'getPaymentStatus'])->middleware('auth:sanctum');  // هي صلاحية لمالك الطلب فقط
+Route::patch('cancelPayment/{paymentId}' , [PaymentController::class , 'cancelPayment'])->middleware('auth:sanctum');  // هي صلاحية لمالك الطلب فقط
+Route::get('showAllPayments' , [PaymentController::class , 'showAllPayments'])->middleware('auth:sanctum');  // هي صلاحية لمالك الطلب فقط
+
+
+
+// Shipment Api
+Route::post('store/shipment' , [ShipmentController::class, 'store'])->middleware('auth:sanctum');
+Route::get('showShipment/{orderId}' , [ShipmentController::class, 'showShipment'])->middleware('auth:sanctum');
+Route::post('cancelShipment/{orderId}' , [ShipmentController::class, 'cancelShipment'])->middleware('auth:sanctum'); // أدمن فقط
+Route::get('showAllShipments' , [ShipmentController::class, 'showAllShipments'])->middleware('auth:sanctum'); // أدمن فقط
