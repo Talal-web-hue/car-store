@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -99,3 +100,10 @@ Route::post('store/shipment' , [ShipmentController::class, 'store'])->middleware
 Route::get('showShipment/{orderId}' , [ShipmentController::class, 'showShipment'])->middleware('auth:sanctum');
 Route::post('cancelShipment/{orderId}' , [ShipmentController::class, 'cancelShipment'])->middleware('auth:sanctum'); // أدمن فقط
 Route::get('showAllShipments' , [ShipmentController::class, 'showAllShipments'])->middleware('auth:sanctum'); // أدمن فقط
+
+
+
+// Invoice Api
+Route::post('Inovice/generate/{orderId}' , [InvoiceController::class , 'generate'])->middleware('auth:sanctum'); // للأدمن فقط
+Route::get('showDetail/{invoiceId}', [InvoiceController::class  , 'show'])->middleware('auth:sanctum');   //  أدمن أو صاحب الفاتورة فقط
+Route::get('index', [InvoiceController::class  , 'index'])->middleware('auth:sanctum');   //  أدمن أو صاحب الفاتورة فقط

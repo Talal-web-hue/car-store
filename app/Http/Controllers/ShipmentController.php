@@ -107,7 +107,7 @@ class ShipmentController extends Controller
 
 
 //    تابع إلغاء شحنة
- 
+//  طبعا في نظام الشحنات لا نقوم بحذف الشحنة نهائيا , لإنه من ممكن تلزمني تفاصيل لشحنة ما
   public function cancelShipment(Request $request , Order $orderId)
   {
    $user = $request->user();
